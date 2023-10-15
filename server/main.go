@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net"
 	"os"
 	"os/signal"
@@ -10,8 +11,27 @@ import (
 func handleClient(conn net.Conn) {
 	defer conn.Close()
 
-	// Handle database queries and responses here
-	// Example: Read query from the client, process it, and send back a response.
+	// Read the query from the client
+	queryBuffer := make([]byte, 1024)
+	n, err := conn.Read(queryBuffer)
+	if err != nil {
+		// Handle the error
+		return
+	}
+
+	query := string(queryBuffer[:n])
+
+	// Process the query (e.g., execute it against your database)
+	// Simulate a response for demonstration purposes
+	response := "Query result for: " + query
+
+	// Logging query and response for easier debugging
+	fmt.Printf("Query: %s\nResponse: %s\n", query, response)
+	_, err = conn.Write([]byte(response))
+	if err != nil {
+		// Handling error: JUST PANIC FOR NOW!!
+		panic(err)
+	}
 }
 
 func main() {
