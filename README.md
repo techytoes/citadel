@@ -16,3 +16,6 @@ Pretty straightforward. Run these 2 commands:
 cd server && go run main.go
 cd client && go run main.go
 ```
+
+### What next?
+I will probably improve queries and add web server so that I have better control over the queries that I hit to database.
